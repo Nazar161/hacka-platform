@@ -63,17 +63,6 @@ const Team = sequelize.define('team', {
 Team.hasMany(User, {foreignKey: 'team_id'});
 User.belongsTo(Team, {foreignKey: 'team_id'});
 
-
-const Captain = sequelize.define('captain', {
-    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
-});
-
-User.hasOne(Captain, {foreignKey: 'user_id'});
-Captain.belongsTo(User, {foreignKey: 'user_id'});
-
-Team.hasOne(Captain, {foreignKey: 'team_id'});
-Captain.belongsTo(Team, {foreignKey: 'team_id'});
-
 const Curator = sequelize.define('curator', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
     name: {type: DataTypes.STRING, allowNull: false},
