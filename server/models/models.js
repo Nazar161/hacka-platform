@@ -73,23 +73,33 @@ const Curator = sequelize.define('curator', {
 Curator.hasMany(Team, {foreignKey: 'curator_id'});
 Team.belongsTo(Curator, {foreignKey: 'curator_id'});
 
-const JoinRequest = sequelize.define('join_request', {
-    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4}
-});
+const Vacancy = sequelize.define('vacancies', {
+    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
+    title: {type: DataTypes.STRING, allowNull: false},
+    description: {type: DataTypes.TEXT},
+})
 
-const ReqStatus = sequelize.define('req_status', {
+Team.hasMany(Vacancy, {foreignKey: 'team_id'});
+Vacancy.belongsTo(Team, {foreignKey: 'team_id'});
+
+const VacancyApplications = sequelize.define('vacancy_application', {
+    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
+    message: {type: DataTypes.TEXT},
+})
+
+const Status = sequelize.define('status', {
     id: {type: DataTypes.INTEGER, primaryKey: true},
     value: {type: DataTypes.STRING, unique: true, allowNull: false}
 });
 
-User.hasMany(JoinRequest, {foreignKey: 'user_id'});
-JoinRequest.belongsTo(User, {foreignKey: 'user_id'});
+User.hasMany(VacancyApplications, {foreignKey: 'user_id'});
+VacancyApplications.belongsTo(User, {foreignKey: 'user_id'});
 
-Team.hasMany(JoinRequest, {foreignKey: 'team_id'});
-JoinRequest.belongsTo(Team, {foreignKey: 'team_id'});
+Vacancy.hasMany(VacancyApplications, {foreignKey: 'vacancy_id'});
+VacancyApplications.belongsTo(Vacancy, {foreignKey: 'vacancy_id'});
 
-ReqStatus.hasMany(JoinRequest, {foreignKey: 'req_status_id'});
-JoinRequest.belongsTo(ReqStatus, {foreignKey: 'req_status_id'});
+Status.hasMany(VacancyApplications, {foreignKey: 'status_id'});
+VacancyApplications.belongsTo(Status, {foreignKey: 'status_id'});
 
 const Case = sequelize.define('case', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
@@ -252,10 +262,9 @@ module.exports = {
     Role,
     Token,
     Team,
-    Captain,
     Curator,
-    JoinRequest,
-    ReqStatus,
+    Vacancy,
+    VacancyApplications,
     Case,
     TeamCases,
     TeamCurrentCase,
