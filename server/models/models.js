@@ -55,7 +55,7 @@ Token.belongsTo(User, {foreignKey: 'user_id'});
 
 const Team = sequelize.define('team', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
     achievements: {type: DataTypes.TEXT},
     // format_of_participation: {type: DataTypes.BOOLEAN, allowNull: false},
 });
