@@ -1,4 +1,4 @@
-const {UserInfo, UserInfoSkill, Skill} = require("../models/models");
+const {UserInfo} = require("../models/models");
 
 class UserInfoService {
     async update(id, organization, portfolio, number_of_hackathons, role_in_team, skills) {
