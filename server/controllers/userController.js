@@ -58,16 +58,22 @@ class UserController {
             next(e)
         }
     }
-    async getAll(req, res, next) {
+    async getAll(req, res) {
         const users = await UserService.getAllUsers();
         return res.json(users);
     }
 
-    async getOne(req, res, next) {
+    async getOne(req, res) {
         const {id} = req.params;
         const user = await UserService.getOneUser(id);
         return res.json(user);
     }
+
+    async getCaptains(req, res) {
+        const captains = await UserService.getAllCaptains();
+        return res.json(captains)
+    }
+
     async create(req, res, next) {
 
     }
