@@ -18,6 +18,17 @@ class TeamController {
             next(e)
         }
     }
+
+    async getAll(req, res) {
+        const teams = await teamService.getAllTeams();
+        return res.json(teams)
+    }
+
+    async getOne(req, res) {
+        const {id} = req.params;
+        const team = await teamService.getOneTeam(id);
+        return res.json(team);
+    }
 }
 
 module.exports = new TeamController();
