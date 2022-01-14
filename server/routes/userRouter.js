@@ -2,7 +2,8 @@ const Router = require('express');
 const router = new Router();
 const {body} = require('express-validator');
 const userController = require('../controllers/userController');
-const authMiddleware = require('../middlewares/authMiddleware.js')
+const authMiddleware = require('../middlewares/authMiddleware.js');
+const checkRoleMiddleware = require('../middlewares/checkRoleMiddleware.js')
 
 router.post('/registration',
     body('email').isEmail(),
@@ -17,7 +18,8 @@ router.get('/refresh', userController.refresh);
 router.get('/', authMiddleware, userController.getAll);
 router.get('/:id', authMiddleware, userController.getOne);
 
-//creating a user, for ADMIN
+// ADMIN
+router.get('/captains', checkRoleMiddleware(2), userController.getCaptains);
 router.post('/', userController.create);
 
 
