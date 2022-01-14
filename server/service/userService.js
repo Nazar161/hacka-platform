@@ -6,6 +6,7 @@ const MailService = require('./mailService.js');
 const TokenService = require('./tokenService.js')
 const UserDto = require("../dtos/userDto.js");
 const {Team, Skill} = require("../models/models");
+const {Op} = require("sequelize");
 
 
 class UserService {
@@ -89,7 +90,11 @@ class UserService {
 
     async getAllUsers() {
         const users = await User.findAll({
-            where: {role_id: 1},
+            where: {
+                role_id: {
+                    [Op.or]: [1, 3]
+                }
+            },
             attributes: ['id', 'name', 'surname', 'team_id']
         })
         return users;
@@ -106,6 +111,15 @@ class UserService {
             ]
         })
         return user;
+    }
+
+    async getAllCaptains() {
+        const captains = await User.findAll({
+            where: {role_id: 3},
+            attributes: ['id', 'name', 'surname', 'team_id']
+        })
+
+        return captains
     }
 
 }
