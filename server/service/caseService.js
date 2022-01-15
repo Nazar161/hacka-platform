@@ -1,8 +1,7 @@
-const {TeamCurrentCase, Team, Case} = require("../models/models");
+const {TeamCurrentCase, Team, Case, HackathonEvent} = require("../models/models");
 
 class CaseService {
     async selectCase(team_id, case_id) {
-        // const teamCases = await TeamCases.create({team_id, case_id});
         const team = await Team.findOne({where: {id: team_id}});
         await team.addCase(case_id);
         const currentCase = await TeamCurrentCase.findOne({
@@ -14,11 +13,21 @@ class CaseService {
             const currentCase = await TeamCurrentCase.create(
                 {team_id, case_id},
             );
-            return {currentCase};
+            const selectedCase = await Case.findOne({
+                where: {id: currentCase.case_id},
+                attributes: ['id', 'title'],
+                include: {model: HackathonEvent, attributes: ['id', 'title']}
+            });
+            return {selectedCase};
         }
         currentCase.case_id = case_id;
         await currentCase.save();
-        return {currentCase}
+        const selectedCase = await Case.findOne({
+            where: {id: currentCase.case_id},
+            attributes: ['id', 'title'],
+            include: {model: HackathonEvent, attributes: ['id', 'title']}
+        });
+        return {selectedCase};
     }
 }
 
