@@ -1,4 +1,4 @@
-const {Team, User, Vacancy, Case} = require("../models/models");
+const {Team, User, Vacancy, Case, CaseWinners} = require("../models/models");
 const ApiError = require("../exceptions/apiError.js");
 const userService = require('../service/userService.js')
 
@@ -36,6 +36,8 @@ class TeamService {
                 {model: User, attributes: ['id', 'name']},
                 {model: Vacancy, attributes: ['id', 'title']},
                 {model: Case, attributes: ['id', 'title'], through: {attributes: []}},
+                {model: CaseWinners, attributes: ['case_id', 'rating_id']}
+                // on Frontend will solve problem of won cases
             ]
         });
         return team;

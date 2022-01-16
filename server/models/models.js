@@ -109,11 +109,11 @@ const Case = sequelize.define('case', {
 });
 
 const TeamCases = sequelize.define('team_cases', {
-    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
+
 });
 
-Case.belongsToMany(Team, {through: TeamCases, foreignKey: 'team_id'});
 Team.belongsToMany(Case, {through: TeamCases, foreignKey: 'case_id'});
+Case.belongsToMany(Team, {through: TeamCases, foreignKey: 'team_id'});
 
 const TeamCurrentCase = sequelize.define('team_current_case', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
