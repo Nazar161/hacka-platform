@@ -3,7 +3,7 @@ const {TeamCurrentCase, Team, Case, HackathonEvent, TeamCases} = require("../mod
 class CaseService {
     async selectCase(team_id, case_id) {
         const team = await Team.findOne({where: {id: team_id}, attributes: ['id']});
-        team.addCase(case_id);
+        await team.addCase(case_id);
 
         const currentCase = await TeamCurrentCase.findOne({
             where: {team_id},
