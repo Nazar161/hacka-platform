@@ -82,6 +82,13 @@ const Vacancy = sequelize.define('vacancies', {
 Team.hasMany(Vacancy, {foreignKey: 'team_id'});
 Vacancy.belongsTo(Team, {foreignKey: 'team_id'});
 
+const VacancySkill = sequelize.define('vacancy_skill', {
+
+});
+
+Vacancy.belongsToMany(Skill, {through: VacancySkill, foreignKey: 'skill_id'});
+Skill.belongsToMany(Vacancy, {through: VacancySkill, foreignKey: 'vacancy_id'})
+
 const VacancyApplications = sequelize.define('vacancy_application', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
     message: {type: DataTypes.TEXT},
