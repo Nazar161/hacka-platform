@@ -288,5 +288,6 @@ module.exports = {
     CaseWinners,
     Rating,
     Format,
+    Status,
     ReqForNewHacka,
 }//28

@@ -16,10 +16,12 @@ router.get('/refresh', userController.refresh);
 
 //getting users
 router.get('/', authMiddleware, userController.getAll);
-router.get('/:id', authMiddleware, userController.getOne);
 
 // ADMIN
 router.get('/captains', checkRoleMiddleware(2), userController.getCaptains);
+
+router.get('/:id', authMiddleware, userController.getOne);
+
 router.post('/', userController.create);
 
 
