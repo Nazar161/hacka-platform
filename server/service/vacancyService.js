@@ -1,4 +1,4 @@
-const {Vacancy, Team, Skill, VacancyApplications, Status} = require("../models/models");
+const {Vacancy, Team, Skill, VacancyApplications, Status, User} = require("../models/models");
 const ApiError = require("../exceptions/apiError");
 const {Op} = require("sequelize");
 
@@ -59,6 +59,48 @@ class VacancyService {
         return  filteredVacancies;
     }
 
+    async apply(message, vacancy_id, id, team_id) {
+        if (team_id) {
+            throw ApiError.BadRequest(`Вы уже состоите в команде`)
+        }
+        const vacancyApplication = await VacancyApplications.create({message, vacancy_id, user_id: id})
+        return vacancyApplication;
+    }
+
+    async getTeamVacancies(team_id) {
+        return await Vacancy.findAll({where: {team_id}, attributes: ['id', 'title']})
+    }
+
+    async getVacancyApplications(vacancy_id) {
+        return await VacancyApplications.findAll({
+            where: {[Op.and]: [{vacancy_id}, {status_id: 1}]},
+            attributes: ['id','message'],
+            include: {model: User, attributes: ['id','name']}
+        })
+    }
+
+    async giveTeamResponse(teamRes, vacancyApplicationId, user_id, team_id) {
+        if (teamRes === false) {
+            const vacancyApplication = await VacancyApplications.findOne({where: {id: vacancyApplicationId}});
+            vacancyApplication.status_id = 3;
+            await vacancyApplication.save();
+            return vacancyApplication;
+        }
+
+        const candidate = await User.findOne({where: {id: user_id}});
+        if (candidate.team_id) {
+            throw ApiError.BadRequest(`Участник уже состоит в команде`);
+        }
+        candidate.team_id = team_id;
+        await candidate.save();
+
+        const vacancyApplication = await VacancyApplications.findOne({where: {id: vacancyApplicationId}});
+        vacancyApplication.status_id = 2;
+        await vacancyApplication.save();
+
+        return vacancyApplication;
+
+    }
 }
 
 module.exports = new VacancyService()

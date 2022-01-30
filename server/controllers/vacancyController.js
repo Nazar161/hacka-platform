@@ -45,6 +45,40 @@ class VacancyController {
     async delete(req, res, next) {
 
     }
+
+    async apply(req, res, next) {
+        try {
+            const {message, vacancy_id} = req.body;
+            const {id, team_id} = req.user;
+            const vacancyApplication = await vacancyService.apply(message, vacancy_id, id, team_id);
+            return res.json(vacancyApplication);
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getTeamVacancies(req, res) {
+            const {team_id} = req.user;
+            const teamVacancies = await vacancyService.getTeamVacancies(team_id);
+            return res.json(teamVacancies);
+    }
+
+    async getVacancyApplications(req, res) {
+            const {vacancy_id} = req.params;
+            const vacancyApplications = await vacancyService.getVacancyApplications(vacancy_id);
+            return res.json(vacancyApplications)
+    }
+
+    async giveTeamResponse(req, res, next) {
+        try {
+            const {teamRes, vacancyApplicationId, user_id} = req.body;
+            const {team_id} = req.user;
+            const teamResponse = await vacancyService.giveTeamResponse(teamRes, vacancyApplicationId, user_id, team_id);
+            return res.json(teamResponse)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new VacancyController()
