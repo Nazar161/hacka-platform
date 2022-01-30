@@ -106,7 +106,7 @@ Vacancy.hasMany(VacancyApplications, {foreignKey: 'vacancy_id'});
 VacancyApplications.belongsTo(Vacancy, {foreignKey: 'vacancy_id'});
 
 Status.hasMany(VacancyApplications, {foreignKey: 'status_id'});
-VacancyApplications.belongsTo(Status, {foreignKey: 'status_id'});
+VacancyApplications.belongsTo(Status, {foreignKey: {name: 'status_id', defaultValue: 1, allowNull: false}});
 
 const Case = sequelize.define('case', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
