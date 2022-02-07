@@ -59,6 +59,10 @@ class VacancyService {
         return  filteredVacancies;
     }
 
+    async deleteVacancy(id) {
+        return await Vacancy.destroy({where: {id}})
+    }
+
     async apply(message, vacancy_id, id, team_id) {
         if (team_id) {
             throw ApiError.BadRequest(`Вы уже состоите в команде`)
@@ -101,6 +105,20 @@ class VacancyService {
         return vacancyApplication;
 
     }
+
+    async getUserApplications(id) {
+        const userApplications = await VacancyApplications.findAll({
+            where: {user_id: id},
+            attributes: [],
+            include: [
+                {model: Vacancy, attributes: ['id', 'title'], include: [{model: Team, attributes: ['name']}] },
+                {model: Status, attributes: ['value']}
+            ]
+        });
+
+        return userApplications;
+    }
+
 }
 
 module.exports = new VacancyService()

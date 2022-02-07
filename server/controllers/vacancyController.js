@@ -42,8 +42,10 @@ class VacancyController {
         return res.json(filteredVacancies)
     }
 
-    async delete(req, res, next) {
-
+    async delete(req, res) {
+        const {id} = req.params;
+        const deletedVacancy = await vacancyService.deleteVacancy(id);
+        return res.json(deletedVacancy)
     }
 
     async apply(req, res, next) {
@@ -78,6 +80,12 @@ class VacancyController {
         } catch (e) {
             next(e)
         }
+    }
+
+    async getUserApplications(req, res, next) {
+        const {id} = req.user;
+        const userApplications = await vacancyService.getUserApplications(id);
+        return res.json(userApplications);
     }
 }
 
