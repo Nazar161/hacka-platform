@@ -196,15 +196,18 @@ const HackathonEventOrganizer = sequelize.define('hackathon_event_organizer', {
 HackathonEvent.belongsToMany(Organizer, {through: HackathonEventOrganizer, foreignKey: 'organizer_id'});
 Organizer.belongsToMany(HackathonEvent, {through: HackathonEventOrganizer, foreignKey: 'hackathon_event_id'});
 
-const CaseOwner = sequelize.define('case_owner', {
-    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
-});
+// const CaseOwner = sequelize.define('case_owner', {
+//     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
+// });
 
-Organizer.hasOne(CaseOwner, {foreignKey: 'organizer_id'});
-CaseOwner.belongsTo(Organizer, {foreignKey: 'organizer_id'});
+// Organizer.hasOne(CaseOwner, {foreignKey: 'organizer_id'});
+// CaseOwner.belongsTo(Organizer, {foreignKey: 'organizer_id'});
 
-CaseOwner.hasMany(Case, {foreignKey: 'case_owner_id'});
-Case.belongsTo(CaseOwner,{foreignKey: 'case_owner_id'});
+// CaseOwner.hasMany(Case, {foreignKey: 'case_owner_id'});
+// Case.belongsTo(CaseOwner,{foreignKey: 'case_owner_id'});
+
+Organizer.hasMany(Case, {foreignKey: 'organizer_id'});
+Case.belongsTo(Organizer, {foreignKey: 'organizer_id'});
 
 const Partner = sequelize.define('partner', {
     id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
@@ -282,7 +285,7 @@ module.exports = {
     HackathonEventTeams,
     Organizer,
     HackathonEventOrganizer,
-    CaseOwner,
+    // CaseOwner,
     Partner,
     HackathonEventPartner,
     CaseWinners,
