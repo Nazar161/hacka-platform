@@ -1,4 +1,4 @@
-const {Team, User, Vacancy, Case, CaseWinners} = require("../models/models");
+const {Team, User, Vacancy, Case, CaseWinners, HackathonEventTeams} = require("../models/models");
 const ApiError = require("../exceptions/apiError.js");
 const userService = require('../service/userService.js')
 
@@ -42,6 +42,38 @@ class TeamService {
         });
         return team;
     }
+
+    async takePart(team_id, eventId) {
+        const teamTakesPart = await HackathonEventTeams.create({
+            team_id,
+            hackathon_event_id: eventId
+        })
+
+        return teamTakesPart;
+    }
+
+    async cancelTakingPart(team_id, eventId) {
+        await HackathonEventTeams.destroy({
+            where: {
+                team_id,
+                hackathon_event_id: eventId
+            }
+        });
+    }
+
+    async confirm(team_id, eventId) {
+        const confirmation = await HackathonEventTeams.findOne({
+            where: {
+                team_id,
+                hackathon_event_id: eventId
+            }
+        })
+        confirmation.team_confirmation = true;
+
+        await confirmation.save();
+    }
+
+    
 }
 
 module.exports = new TeamService();
