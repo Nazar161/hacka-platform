@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import 'antd/dist/antd.css';
+import { BrowserRouter } from 'react-router-dom';
+import GlobalStyles from './styledComponents';
+
+import 'antd/dist/antd.min.css'
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+	<BrowserRouter>
+		<GlobalStyles/>
+		<App/>
+	</BrowserRouter>,
+	document.getElementById('root')
 );
