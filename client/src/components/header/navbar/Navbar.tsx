@@ -23,7 +23,7 @@ const Navbar: FC = () => {
                 <Link to='registration' style={{'marginRight': '5px'}}>
                     <NavBtn>Регистрация</NavBtn>
                 </Link>
-                <Link to='userprofile' style={{'marginRight': '5px'}}>
+                <Link to='account' style={{'marginRight': '5px'}}>
                      <NavBtn>имя пользователя</NavBtn>
                 </Link>
                 <NavBtn onClick={()=> console.log("hello bro")}>Выйти</NavBtn>
