@@ -68,5 +68,6 @@ export const NavBtn = styled.button`
     :hover {
         background-color: #255783;
         transition: 300ms;
+        color: #15cdfc;
     }
 `
