@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { Nav, NavBtn, NavBtns, NavLink, NavMenu } from './navbarStyle.js';
 import LoginForm from '../../forms/login-form/LoginForm'
 import { navPublicRoutes, navPrivateRoutes } from '../../../constants/navbarRoutes';
+import Dropdown from '../../dropdown/Dropdown';
+import NavbarButtonLink from '../../common/NavbarButtonLink';
 
 const Navbar: FC = () => {
     return (
@@ -20,16 +21,10 @@ const Navbar: FC = () => {
             </NavMenu>
             <NavBtns>
                 <LoginForm/>
-                <Link to='registration' style={{'marginRight': '5px'}}>
-                    <NavBtn>Регистрация</NavBtn>
-                </Link>
-                <Link to='account' style={{'marginRight': '5px'}}>
-                     <NavBtn>имя пользователя</NavBtn>
-                </Link>
+                <NavbarButtonLink path='registration' title='Регистрация' style={{'marginRight': '5px'}}/>
+                <Dropdown/>
                 <NavBtn onClick={()=> console.log("hello bro")}>Выйти</NavBtn>
-                <Link to='adminpage' style={{'marginRight': '5px'}}>
-                    <NavBtn>admin</NavBtn>
-                </Link>
+                <NavbarButtonLink path='adminpage' title='admin' style={{'marginRight': '5px'}}/>
             </NavBtns>
         </Nav>
     );
