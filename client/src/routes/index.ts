@@ -1,10 +1,12 @@
 import React from "react";
-import Home from "../pages/Home";
-import Account from "../pages/Account";
-import UserInfoUpd from "../pages/UserInfoUpd";
-import Registration from "../pages/Registration";
-import Teams from "../pages/Teams";
-import Team from "../pages/Team";
+import Home from "../pages/home-page/Home";
+import Account from "../pages/account-page/Account";
+import UserInfoUpd from "../pages/user-info-upd-page/UserInfoUpd";
+import Registration from "../pages/registration-page/Registration";
+import Teams from "../pages/team-page/Teams";
+import TeamItemPage from "../pages/team-page/TeamItemPage";
+import Vacancies from "../pages/vacancy-page/Vacancies";
+import VacancyItemPage from "../pages/vacancy-page/VacancyItemPage";
 
 export interface IRoute {
     element: React.ComponentType,
@@ -20,7 +22,9 @@ export enum authRoutesNames {
     ACCOUNT = 'account',
     USER_INFO_UPDATE = 'userInfoUpd',
     TEAMS = 'teams',
-    TEAM = 'teams/:teamId'
+    TEAM_ITEM_PAGE = 'teams/:teamId',
+    VACANCIES = 'vacancies',
+    VACANCY_ITEM_PAGE = 'vacancies/:vacancyId'
 }
 
 export enum captainRoutesNames {
@@ -57,8 +61,16 @@ export const authRoutes: IRoute[] = [
         path: authRoutesNames.TEAMS
     },
     {
-        element: Team,
-        path: authRoutesNames.TEAM
+        element: TeamItemPage,
+        path: authRoutesNames.TEAM_ITEM_PAGE
+    },
+    {
+        element: Vacancies,
+        path: authRoutesNames.VACANCIES
+    },
+    {
+        element: VacancyItemPage,
+        path: authRoutesNames.VACANCY_ITEM_PAGE
     }
 ]
 
