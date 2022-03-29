@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import GlobalStyles from './styledComponents';
+import GlobalStyles from './styled-сomponents';
 
 import 'antd/dist/antd.min.css'
 

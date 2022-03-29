@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import AppRouter from './routes/AppRouter';
 import { Layout } from 'antd';
-import { Container } from './styledComponents';
+import { Container } from './styled-сomponents';
 import Header from './components/header/Header';
 
 const App: FC = () => {
