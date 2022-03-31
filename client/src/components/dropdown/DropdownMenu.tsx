@@ -10,6 +10,7 @@ const DropdownMenu: FC = () => {
                 <NavbarButtonLink
                     path={item.path}
                     title={item.title}
+                    key={item.title}
                 />
             )}
         </div>
