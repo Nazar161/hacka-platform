@@ -177,6 +177,17 @@ const HackathonEventTeams = sequelize.define('hackathon_event_teams', {
     team_confirmation: {type: DataTypes.BOOLEAN, defaultValue: false},
 });
 
+const HackathonEventInfo = sequelize.define('hackathon_event_info', {
+    id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
+    overview: {type: DataTypes.TEXT, allowNull: false},
+    info: {type: DataTypes.TEXT},
+    email: {type: DataTypes.STRING, allowNull: false},
+    phone: {type: DataTypes.STRING} 
+})
+
+HackathonEvent.hasOne(HackathonEventInfo, {foreignKey: 'hackathon_event_id'});
+HackathonEventInfo.belongsTo(HackathonEvent, {foreignKey: 'hackathon_event_id'});
+
 Team.hasMany(HackathonEventTeams, {foreignKey: 'team_id'});
 HackathonEventTeams.belongsTo(Team, {foreignKey: 'team_id'});
 
@@ -283,6 +294,7 @@ module.exports = {
     CaseSubject,
     HackathonEvent,
     HackathonEventTeams,
+    HackathonEventInfo,
     Organizer,
     HackathonEventOrganizer,
     // CaseOwner,
