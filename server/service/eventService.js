@@ -1,4 +1,5 @@
-const {HackathonEvent, Partner, Organizer} = require("../models/models");
+const {HackathonEvent, Partner, Organizer, Format, HackathonEventTeams, Team, HackathonEventInfo} = require("../models/models");
+const ApiError = require("../exceptions/apiError.js");
 
 class EventService {
     async createEvent(title, start, end, prizeFund, location, formatId) {
@@ -41,6 +42,43 @@ class EventService {
         const sponsors = await Sponsor.findAll({attributes: ['id', 'name', 'link']});
         const searchedSponsors = sponsors.filter(sponsor => sponsor.name.toLowerCase().includes(searchQuery.toLowerCase()))
         return searchedSponsors;
+    }
+
+    async getAllEvents() {
+        const events = await HackathonEvent.findAll({attributes: ['id', 'title', 'start', 'prize_fund', 'past_event', 'past_event']});
+        return events;
+    }
+
+    async getOneEvent(id) {
+        const event = await HackathonEvent.findOne({
+            where: {id},
+            attributes: {exclude: ['createdAt', 'updatedAt', 'format_id']},
+            include: [
+                {model: Format, attributes: ['value']},
+                {model: HackathonEventInfo, attributes: ['overview', 'info', 'email', 'phone']}
+            ]
+        })
+
+        if(!event) {
+            throw ApiError.BadRequest(`Мероприятие с таким ID не существеут`);
+        }
+
+        return event;
+    }
+
+    async eventTeams(eventId) {
+        const teams = await HackathonEventTeams.findAll({
+            where: {
+                hackathon_event_id: eventId,
+                team_confirmation: true
+            },
+            attributes: [],
+            include: {model: Team, attributes: ['id', 'name']}
+        })
+        
+        const teamsArr = teams.map(team => team.team);
+
+        return teamsArr;
     }
 }
 

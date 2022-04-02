@@ -36,6 +36,27 @@ class EventController {
         return res.json(searchedPartners);
     }
 
+    async getAll(req, res) {
+        const allEvents = await eventService.getAllEvents();
+        return res.json(allEvents);
+    }
+
+    async getOne(req, res, next) {
+        try {
+            const {id} = req.params;
+            const event = await eventService.getOneEvent(id);  
+            return res.json(event); 
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async eventTeams(req, res) {
+        const {eventId} = req.query;
+        const teams = await eventService.eventTeams(eventId);
+        return res.json(teams)
+    }
+
 }
 
 module.exports = new EventController();
