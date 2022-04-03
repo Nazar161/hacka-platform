@@ -57,6 +57,13 @@ class EventController {
         return res.json(teams)
     }
 
+    async teamSelectedCaseId(req, res) {
+        const {eventId} = req.query;
+        const {team_id} = req.user;
+        const caseId = await eventService.getTeamSelectedCaseId(eventId, team_id);
+        return res.json(caseId);
+    }
+
 }
 
 module.exports = new EventController();

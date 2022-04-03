@@ -6,7 +6,8 @@ const checkRoleMiddleware = require('../middlewares/checkRoleMiddleware.js')
 
 router.post('/', checkRoleMiddleware(2), eventController.create);
 router.get('/', authMiddleware, eventController.getAll);
-router.get('/teams', authMiddleware, eventController.eventTeams)
+router.get('/teams', authMiddleware, eventController.eventTeams);
+router.get('/teamSelectedCaseId', authMiddleware, eventController.teamSelectedCaseId);
 router.post('/partners', eventController.addPartners);
 router.post('/organizers', eventController.addOrganizers);
 router.get('/searchPartners', eventController.searchPartners);

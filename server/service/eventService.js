@@ -1,4 +1,4 @@
-const {HackathonEvent, Partner, Organizer, Format, HackathonEventTeams, Team, HackathonEventInfo} = require("../models/models");
+const {HackathonEvent, Partner, Organizer, Format, HackathonEventTeams, Team, HackathonEventInfo, Case} = require("../models/models");
 const ApiError = require("../exceptions/apiError.js");
 
 class EventService {
@@ -79,6 +79,18 @@ class EventService {
         const teamsArr = teams.map(team => team.team);
 
         return teamsArr;
+    }
+
+    async getTeamSelectedCaseId(eventId, team_id) {
+        const caseId = await Case.findOne({
+            attributes: ['id'],
+            include: [
+                {model: Team, where: {id: team_id}, attributes: []},
+                {model: HackathonEvent, where: {id: eventId}, attributes: []}
+            ]
+        })
+
+        return caseId;
     }
 }
 
