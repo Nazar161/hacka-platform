@@ -7,6 +7,7 @@ import Teams from "../pages/team-page/Teams";
 import TeamItemPage from "../pages/team-page/TeamItemPage";
 import Vacancies from "../pages/vacancy-page/Vacancies";
 import VacancyItemPage from "../pages/vacancy-page/VacancyItemPage";
+import Admin from "../pages/admin-page/Admin";
 
 export interface IRoute {
     element: React.ComponentType,
@@ -32,7 +33,7 @@ export enum captainRoutesNames {
 }
 
 export enum adminRoutesNames {
-
+    ADMIN = 'adminpage'
 }
 
 export const publicRoutes: IRoute[] = [
@@ -79,5 +80,8 @@ export const captainRoutes: IRoute[] = [
 ]
 
 export const adminRoutes: IRoute[] = [
-
+    {
+        element: Admin,
+        path: adminRoutesNames.ADMIN
+    }
 ]
